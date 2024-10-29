@@ -3,25 +3,15 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace DataAccess.Models;
 
 [Table("users")]
 [Index("Username", Name = "users_username_key", IsUnique = true)]
-public partial class User
+public partial class User : IdentityUser<int>
 {
-    [Key]
-    [Column("userid")]
-    public int Userid { get; set; }
-
-    [Column("username")]
-    [StringLength(50)]
-    public string Username { get; set; } = null!;
-
-    [Column("passwordhash")]
-    [StringLength(255)]
-    public string Passwordhash { get; set; } = null!;
-
+  
     [Column("createdat", TypeName = "timestamp without time zone")]
     public DateTime? Createdat { get; set; }
 

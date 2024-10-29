@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using DataAccess.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess;
 
-public partial class MyDbContext : DbContext
+public partial class MyDbContext : IdentityDbContext<User, IdentityRole<int>, int>
 {
     public MyDbContext(DbContextOptions<MyDbContext> options)
         : base(options)
@@ -21,9 +23,7 @@ public partial class MyDbContext : DbContext
     public virtual DbSet<Scoreboard> Scoreboards { get; set; }
 
     public virtual DbSet<Universe> Universes { get; set; }
-
-    public virtual DbSet<User> Users { get; set; }
-
+    
     public virtual DbSet<Userquestprogress> Userquestprogresses { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -75,13 +75,7 @@ public partial class MyDbContext : DbContext
             entity.HasKey(e => e.Universeid).HasName("universes_pkey");
         });
 
-        modelBuilder.Entity<User>(entity =>
-        {
-            entity.HasKey(e => e.Userid).HasName("users_pkey");
-
-            entity.Property(e => e.Createdat).HasDefaultValueSql("CURRENT_TIMESTAMP");
-        });
-
+        
         modelBuilder.Entity<Userquestprogress>(entity =>
         {
             entity.HasKey(e => e.Progressid).HasName("userquestprogress_pkey");
