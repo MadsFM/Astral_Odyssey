@@ -1,6 +1,6 @@
 #!/bin/bash
 dotnet ef dbcontext scaffold \
-  "Server=localhost;Database=dunderdb;User Id=dunderuser;Password=dunderpass;" \
+  "Server=localhost;Database=Astral;User Id=Odyssey;Password=AstralPass;" \
   Npgsql.EntityFrameworkCore.PostgreSQL \
   --output-dir Models \
   --context-dir . \
