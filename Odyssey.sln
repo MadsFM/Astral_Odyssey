@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "Server\DataAc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Server\Service\Service.csproj", "{54178336-E958-4368-A9F4-88DDE60A5E91}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{29D859E1-E7ED-4668-9775-35CBE5F94E18}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{54178336-E958-4368-A9F4-88DDE60A5E91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54178336-E958-4368-A9F4-88DDE60A5E91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54178336-E958-4368-A9F4-88DDE60A5E91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29D859E1-E7ED-4668-9775-35CBE5F94E18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29D859E1-E7ED-4668-9775-35CBE5F94E18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29D859E1-E7ED-4668-9775-35CBE5F94E18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29D859E1-E7ED-4668-9775-35CBE5F94E18}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0DBF3B9B-C984-45D1-93CB-85B890BB57FC} = {02DDF723-4FE3-4812-ADA8-E5CA705FCC9F}
