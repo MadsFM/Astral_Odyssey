@@ -15,10 +15,37 @@ CREATE TABLE Universes (
 -- Users table to store user information and roles
 CREATE TABLE Users (
                        UserID SERIAL PRIMARY KEY,
-                       Username VARCHAR(50) UNIQUE NOT NULL,
+                       UserName VARCHAR(50) UNIQUE NOT NULL,
+                       NormalizedUserName VARCHAR(50) UNIQUE NOT NULL,
+                       Email VARCHAR(256),
+                       NormalizedEmail VARCHAR(256),
+                       EmailConfirmed BOOLEAN DEFAULT FALSE,
                        PasswordHash VARCHAR(255) NOT NULL,
-                       Role user_role NOT NULL,
+                       SecurityStamp VARCHAR(36),
+                       ConcurrencyStamp VARCHAR(36) DEFAULT gen_random_uuid(),
+                       PhoneNumber VARCHAR(15),
+                       PhoneNumberConfirmed BOOLEAN DEFAULT FALSE,
+                       TwoFactorEnabled BOOLEAN DEFAULT FALSE,
+                       LockoutEnd TIMESTAMP,
+                       LockoutEnabled BOOLEAN DEFAULT FALSE,
+                       AccessFailedCount INT DEFAULT 0,
                        CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Role table
+CREATE TABLE Roles (
+                       RoleID SERIAL PRIMARY KEY,
+                       Name VARCHAR(50) UNIQUE NOT NULL,
+                       NormalizedName VARCHAR(50) UNIQUE NOT NULL
+);
+
+-- join table of users and roles 
+CREATE TABLE UserRoles (
+                           UserID INT NOT NULL,
+                           RoleID INT NOT NULL,
+                           PRIMARY KEY (UserID, RoleID),
+                           FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE,
+                           FOREIGN KEY (RoleID) REFERENCES Roles(RoleID) ON DELETE CASCADE
 );
 
 -- Planets table to represent planets within different universes
@@ -72,3 +99,6 @@ CREATE TABLE UserQuestProgress (
                                    FOREIGN KEY (UserID) REFERENCES Users(UserID),
                                    FOREIGN KEY (QuestID) REFERENCES Quests(QuestID)
 );
+
+
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
