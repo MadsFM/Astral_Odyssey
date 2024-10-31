@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using DataAccess.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess;
 
-public partial class MyDbContext : IdentityDbContext<User, IdentityRole<int>, int>
+public partial class MyDbContext : DbContext
 {
     public MyDbContext(DbContextOptions<MyDbContext> options)
         : base(options)
@@ -20,15 +18,21 @@ public partial class MyDbContext : IdentityDbContext<User, IdentityRole<int>, in
 
     public virtual DbSet<Quiz> Quizzes { get; set; }
 
+    public virtual DbSet<Role> Roles { get; set; }
+
     public virtual DbSet<Scoreboard> Scoreboards { get; set; }
 
     public virtual DbSet<Universe> Universes { get; set; }
-    
+
+    public virtual DbSet<User> Users { get; set; }
+
     public virtual DbSet<Userquestprogress> Userquestprogresses { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.HasPostgresEnum("user_role", new[] { "Admin", "Player", "GameManager" });
+        modelBuilder
+            .HasPostgresEnum("user_role", new[] { "Admin", "Player", "GameManager" })
+            .HasPostgresExtension("pgcrypto");
 
         modelBuilder.Entity<Planet>(entity =>
         {
@@ -59,6 +63,11 @@ public partial class MyDbContext : IdentityDbContext<User, IdentityRole<int>, in
             entity.HasOne(d => d.Quest).WithMany(p => p.Quizzes).HasConstraintName("quizzes_questid_fkey");
         });
 
+        modelBuilder.Entity<Role>(entity =>
+        {
+            entity.HasKey(e => e.Roleid).HasName("roles_pkey");
+        });
+
         modelBuilder.Entity<Scoreboard>(entity =>
         {
             entity.HasKey(e => e.Scoreid).HasName("scoreboard_pkey");
@@ -75,7 +84,36 @@ public partial class MyDbContext : IdentityDbContext<User, IdentityRole<int>, in
             entity.HasKey(e => e.Universeid).HasName("universes_pkey");
         });
 
-        
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.HasKey(e => e.Userid).HasName("users_pkey");
+
+            entity.Property(e => e.Accessfailedcount).HasDefaultValue(0);
+            entity.Property(e => e.Concurrencystamp).HasDefaultValueSql("gen_random_uuid()");
+            entity.Property(e => e.Createdat).HasDefaultValueSql("CURRENT_TIMESTAMP");
+            entity.Property(e => e.Emailconfirmed).HasDefaultValue(false);
+            entity.Property(e => e.Lockoutenabled).HasDefaultValue(false);
+            entity.Property(e => e.Phonenumberconfirmed).HasDefaultValue(false);
+            entity.Property(e => e.Twofactorenabled).HasDefaultValue(false);
+
+            entity.HasMany(d => d.Roles).WithMany(p => p.Users)
+                .UsingEntity<Dictionary<string, object>>(
+                    "Userrole",
+                    r => r.HasOne<Role>().WithMany()
+                        .HasForeignKey("Roleid")
+                        .HasConstraintName("userroles_roleid_fkey"),
+                    l => l.HasOne<User>().WithMany()
+                        .HasForeignKey("Userid")
+                        .HasConstraintName("userroles_userid_fkey"),
+                    j =>
+                    {
+                        j.HasKey("Userid", "Roleid").HasName("userroles_pkey");
+                        j.ToTable("userroles");
+                        j.IndexerProperty<int>("Userid").HasColumnName("userid");
+                        j.IndexerProperty<int>("Roleid").HasColumnName("roleid");
+                    });
+        });
+
         modelBuilder.Entity<Userquestprogress>(entity =>
         {
             entity.HasKey(e => e.Progressid).HasName("userquestprogress_pkey");
