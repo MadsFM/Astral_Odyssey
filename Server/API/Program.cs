@@ -1,7 +1,15 @@
+using System.Text.Json.Serialization;
 using DataAccess;
 using DataAccess.Models;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Service;
+using Service.Interfaces;
+using Service.Transfermodels.Request;
+using Service.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,27 +19,31 @@ var builder = WebApplication.CreateBuilder(args);
 
 #region Data Access
 // Configure the database context to use PostgreSQL (replace connection string)
-builder.Services.AddDbContext<MyDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("AstralO")));
-#endregion
-
-#region Security
-// Configure Identity services
-builder.Services.AddIdentity<User, IdentityRole<int>>()
-    .AddEntityFrameworkStores<MyDbContext>()
-    .AddDefaultTokenProviders();
-
-// Configure application cookies (login and access denied paths)
-builder.Services.ConfigureApplicationCookie(options =>
+builder.Services.AddOptionsWithValidateOnStart<AppOptions>()
+    .Bind(builder.Configuration.GetSection(nameof(AppOptions)))
+    .ValidateDataAnnotations()
+    .Validate(options => new AppOptionsValidator().Validate(options).IsValid,
+        $"{nameof(AppOptions)} validation failed");
+builder.Services.AddDbContext<MyDbContext>((serviceProvider, options) =>
 {
-    options.LoginPath = "/Account/Login";
-    options.AccessDeniedPath = "/Account/AccessDenied";
+    var appOptions = serviceProvider.GetRequiredService<IOptions<AppOptions>>
+        ().Value;
+    options.UseNpgsql(Environment.GetEnvironmentVariable("AstralO") ?? appOptions.AstralO);
 });
 #endregion
 
+
 #region Services
-// Add other services (e.g., controllers, custom services, background services, etc.)
-builder.Services.AddControllers(); // Or `AddControllersWithViews()` for MVC apps
+
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
+builder.Services.AddFluentValidationAutoValidation()
+    .AddFluentValidationClientsideAdapters();
+builder.Services.AddValidatorsFromAssemblyContaining<CreateUserDto>();
+builder.Services.AddOpenApiDocument();
 #endregion
 
 #region Swagger
@@ -73,7 +85,6 @@ app.UseAuthorization();
 // Map controllers if using MVC, or define API routes
 app.MapControllers(); // Use `app.MapDefaultControllerRoute();` for MVC-style route handling
 
-app.MapGet("/", () => "Hello World!");
 #endregion
 
 app.Run();
