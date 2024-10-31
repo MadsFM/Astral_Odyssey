@@ -12,31 +12,19 @@ CREATE TABLE Universes (
                            Description TEXT
 );
 
--- Users table to store user information and roles
+-- Users table for user information
 CREATE TABLE Users (
                        UserID SERIAL PRIMARY KEY,
-                       UserName VARCHAR(50) UNIQUE NOT NULL,
-                       NormalizedUserName VARCHAR(50) UNIQUE NOT NULL,
-                       Email VARCHAR(256),
-                       NormalizedEmail VARCHAR(256),
-                       EmailConfirmed BOOLEAN DEFAULT FALSE,
+                       Username VARCHAR(50) UNIQUE NOT NULL,
+                       Email VARCHAR(100) UNIQUE NOT NULL, 
                        PasswordHash VARCHAR(255) NOT NULL,
-                       SecurityStamp VARCHAR(36),
-                       ConcurrencyStamp VARCHAR(36) DEFAULT gen_random_uuid(),
-                       PhoneNumber VARCHAR(15),
-                       PhoneNumberConfirmed BOOLEAN DEFAULT FALSE,
-                       TwoFactorEnabled BOOLEAN DEFAULT FALSE,
-                       LockoutEnd TIMESTAMP,
-                       LockoutEnabled BOOLEAN DEFAULT FALSE,
-                       AccessFailedCount INT DEFAULT 0,
                        CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Role table
+-- Roles table for defining available roles
 CREATE TABLE Roles (
                        RoleID SERIAL PRIMARY KEY,
-                       Name VARCHAR(50) UNIQUE NOT NULL,
-                       NormalizedName VARCHAR(50) UNIQUE NOT NULL
+                       RoleName VARCHAR(50) UNIQUE NOT NULL
 );
 
 -- join table of users and roles 

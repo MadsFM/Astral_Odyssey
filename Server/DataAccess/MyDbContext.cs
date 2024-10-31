@@ -88,13 +88,7 @@ public partial class MyDbContext : DbContext
         {
             entity.HasKey(e => e.Userid).HasName("users_pkey");
 
-            entity.Property(e => e.Accessfailedcount).HasDefaultValue(0);
-            entity.Property(e => e.Concurrencystamp).HasDefaultValueSql("gen_random_uuid()");
             entity.Property(e => e.Createdat).HasDefaultValueSql("CURRENT_TIMESTAMP");
-            entity.Property(e => e.Emailconfirmed).HasDefaultValue(false);
-            entity.Property(e => e.Lockoutenabled).HasDefaultValue(false);
-            entity.Property(e => e.Phonenumberconfirmed).HasDefaultValue(false);
-            entity.Property(e => e.Twofactorenabled).HasDefaultValue(false);
 
             entity.HasMany(d => d.Roles).WithMany(p => p.Users)
                 .UsingEntity<Dictionary<string, object>>(
