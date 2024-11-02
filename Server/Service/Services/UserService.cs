@@ -59,6 +59,8 @@ public class UserService : IUserService
     public async Task<List<UserDto>> GetAllUsers()
     {
         var users = await _context.Users
+            .Include(u => u.Userroles)
+                .ThenInclude(ur => ur.Role)
             .Select(user => UserDto.FromEntity(user))
             .ToListAsync();
 

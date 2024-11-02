@@ -3,7 +3,7 @@ POST http://localhost:9000/User/create
 Content-Type: application/json
 
 {
-  "username": "TestUser2",
+  "username": "TestUser",
   "email": "test2@user.dk",
   "passwordhash": "Password1!",
   "roleName": "Player"
@@ -16,8 +16,18 @@ Content-Type: application/json
 
 {
   "username": "newUsername",
+  "email": "test2@user.dk",
   "newPassword": "NewSecurePassword123!"
 }
 
 ###
 
+GET http://localhost:9000/User/getAll
+Content-Type: application/json
+
+###
+
+GET http://localhost:9000/User/1
+Content-Type: application/json
+
+###

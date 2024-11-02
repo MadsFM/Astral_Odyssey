@@ -49,7 +49,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPatch("{id}")]
-    public async Task<ActionResult<UserDto>> UpdateUser(int userId, [FromBody] UpdateUserDto updateUserDto)
+    public async Task<ActionResult<UserDto>> UpdateUser(int id, [FromBody] UpdateUserDto updateUserDto)
     {
         if (!ModelState.IsValid)
         {
@@ -58,7 +58,7 @@ public class UserController : ControllerBase
 
         try
         {
-            var updateUser = await _userService.UpdateUser(userId, updateUserDto);
+            var updateUser = await _userService.UpdateUser(id, updateUserDto);
             return Ok(updateUser);
         }
         catch (Exception ex)
