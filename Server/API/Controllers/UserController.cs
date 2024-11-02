@@ -28,6 +28,44 @@ public class UserController : ControllerBase
         var createdUser = await _userService.CreateUser(createUserDto);
         return CreatedAtAction(nameof(CreateUser), new { id = createdUser.Userid }, createdUser);
     }
+
+    [HttpGet("getAll")]
+    public async Task<ActionResult<List<UserDto>>> GetAllUsers()
+    {
+        var users = await _userService.GetAllUsers();
+        return Ok(users);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<UserDto>> GetUserById(int id)
+    {
+        var user = await _userService.GetUserById(id);
+
+        if (user == null)
+        {
+            return NotFound(new { Message = "User not found" });
+        }
+        return Ok(user);
+    }
+
+    [HttpPatch("{id}")]
+    public async Task<ActionResult<UserDto>> UpdateUser(int userId, [FromBody] UpdateUserDto updateUserDto)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        try
+        {
+            var updateUser = await _userService.UpdateUser(userId, updateUserDto);
+            return Ok(updateUser);
+        }
+        catch (Exception ex)
+        {
+            return NotFound(ex.Message);
+        }
+    }
     
     
 }

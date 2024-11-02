@@ -28,6 +28,8 @@ public partial class MyDbContext : DbContext
 
     public virtual DbSet<Userquestprogress> Userquestprogresses { get; set; }
 
+    public virtual DbSet<Userrole> Userroles { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder
@@ -89,23 +91,6 @@ public partial class MyDbContext : DbContext
             entity.HasKey(e => e.Userid).HasName("users_pkey");
 
             entity.Property(e => e.Createdat).HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-            entity.HasMany(d => d.Roles).WithMany(p => p.Users)
-                .UsingEntity<Dictionary<string, object>>(
-                    "Userrole",
-                    r => r.HasOne<Role>().WithMany()
-                        .HasForeignKey("Roleid")
-                        .HasConstraintName("userroles_roleid_fkey"),
-                    l => l.HasOne<User>().WithMany()
-                        .HasForeignKey("Userid")
-                        .HasConstraintName("userroles_userid_fkey"),
-                    j =>
-                    {
-                        j.HasKey("Userid", "Roleid").HasName("userroles_pkey");
-                        j.ToTable("userroles");
-                        j.IndexerProperty<int>("Userid").HasColumnName("userid");
-                        j.IndexerProperty<int>("Roleid").HasColumnName("roleid");
-                    });
         });
 
         modelBuilder.Entity<Userquestprogress>(entity =>
@@ -122,6 +107,17 @@ public partial class MyDbContext : DbContext
             entity.HasOne(d => d.User).WithMany(p => p.Userquestprogresses)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("userquestprogress_userid_fkey");
+        });
+
+        modelBuilder.Entity<Userrole>(entity =>
+        {
+            entity.HasKey(e => new { e.Userid, e.Roleid }).HasName("userroles_pkey");
+
+            entity.Property(e => e.Createdat).HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+            entity.HasOne(d => d.Role).WithMany(p => p.Userroles).HasConstraintName("userroles_roleid_fkey");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Userroles).HasConstraintName("userroles_userid_fkey");
         });
 
         OnModelCreatingPartial(modelBuilder);

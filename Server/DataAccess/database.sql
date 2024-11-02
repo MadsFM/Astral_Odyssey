@@ -31,6 +31,7 @@ CREATE TABLE Roles (
 CREATE TABLE UserRoles (
                            UserID INT NOT NULL,
                            RoleID INT NOT NULL,
+                            CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                            PRIMARY KEY (UserID, RoleID),
                            FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE,
                            FOREIGN KEY (RoleID) REFERENCES Roles(RoleID) ON DELETE CASCADE

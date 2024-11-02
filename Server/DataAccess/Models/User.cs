@@ -36,7 +36,6 @@ public partial class User
     [InverseProperty("User")]
     public virtual ICollection<Userquestprogress> Userquestprogresses { get; set; } = new List<Userquestprogress>();
 
-    [ForeignKey("Userid")]
-    [InverseProperty("Users")]
-    public virtual ICollection<Role> Roles { get; set; } = new List<Role>();
+    [InverseProperty("User")]
+    public virtual ICollection<Userrole> Userroles { get; set; } = new List<Userrole>();
 }

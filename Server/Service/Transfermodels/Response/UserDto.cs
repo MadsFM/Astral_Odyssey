@@ -23,7 +23,7 @@ public class UserDto
             Createdat = user.Createdat,
             ScoreboardIds = user.Scoreboards.Select(s => s.Scoreid).ToList(),
             UserquestprogressIds = user.Userquestprogresses.Select(uqp => uqp.Progressid).ToList(),
-            Roles = user.Roles.Select(r => r.Rolename).ToList()
+            Roles = user.Userroles.Select(ur => ur.Role.Rolename).ToList()
         };
     }
 }

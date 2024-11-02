@@ -18,7 +18,6 @@ public partial class Role
     [StringLength(50)]
     public string Rolename { get; set; } = null!;
 
-    [ForeignKey("Roleid")]
-    [InverseProperty("Roles")]
-    public virtual ICollection<User> Users { get; set; } = new List<User>();
+    [InverseProperty("Role")]
+    public virtual ICollection<Userrole> Userroles { get; set; } = new List<Userrole>();
 }
