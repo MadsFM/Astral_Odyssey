@@ -8,24 +8,26 @@ public class UpdateUserDto
 {
     
     [StringLength(50)]
-    public string Username { get; set; } = null!;
+    public string? Username { get; set; } = null!;
     
     [StringLength(100)]
-    public string Email { get; set; } = null!;
+    public string? Email { get; set; } = null!;
     
     [StringLength(255)]
-    public string NewPassword { get; set; } = null!;
+    public string? NewPassword { get; set; } = null!;
 
     public void UpdateUser(User user)
     {
         if (!string.IsNullOrEmpty(Username))
         {
-            Username = user.Username;
+            user.Username = Username;
         }
+
         if (!string.IsNullOrEmpty(Email))
         {
-            Email = user.Email;
+            user.Email = Email;
         }
+        
         if (!string.IsNullOrEmpty(NewPassword))
         {
             user.Passwordhash = BCrypt.Net.BCrypt.HashPassword(NewPassword);
