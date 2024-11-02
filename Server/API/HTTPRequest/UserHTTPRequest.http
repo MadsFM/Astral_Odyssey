@@ -3,9 +3,21 @@ POST http://localhost:9000/User/create
 Content-Type: application/json
 
 {
-  "username": "exampleUser",
-  "email": "user@example.com",
-  "passwordhash": "ExamplePassword123!"
+  "username": "TestUser2",
+  "email": "test2@user.dk",
+  "passwordhash": "Password1!",
+  "roleName": "Player"
 }
 
 ###
+
+PATCH http://localhost:9000/User/1
+Content-Type: application/json
+
+{
+  "username": "newUsername",
+  "newPassword": "NewSecurePassword123!"
+}
+
+###
+

@@ -16,6 +16,8 @@ public class CreateUserDto
     [Required]
     [StringLength(255)]
     public string Passwordhash { get; set; } = null!;
+
+    public string RoleName { get; set; } = "Player";
     
     public User ToUser()
     {
