@@ -56,7 +56,7 @@ public class UserService : IUserService
         return UserDto.FromEntity(user);
     }
 
-    public async Task<List<UserDto>> GetAllUsers()
+    public async Task<List<UserDto>> ReadAllUsers()
     {
         var users = await _context.Users
             .Include(u => u.Userroles)
@@ -67,7 +67,7 @@ public class UserService : IUserService
         return users;
     }
 
-    public async Task<UserDto?> GetUserById(int userId)
+    public async Task<UserDto?> ReadUserById(int userId)
     {
         var user = await _context.Users
             .FirstOrDefaultAsync(u => u.Userid == userId);
@@ -89,4 +89,56 @@ public class UserService : IUserService
         await _context.SaveChangesAsync();
         return UserDto.FromEntity(user);
     }
+
+    public async Task<User> DeleteUser(int id)
+       {
+           var user = await _context.Users
+               .Include(u => u.Userquestprogresses)
+               .Include(u => u.Userroles)
+               .Include(u => u.Scoreboards)
+               .FirstOrDefaultAsync(u => u.Userid == id);
+       
+           if (user == null)
+           {
+               throw new Exception("User not found");
+           }
+       
+           // Only remove related data if collections are not null
+           if (user.Userquestprogresses?.Any() == true)
+           {
+               _context.Userquestprogresses.RemoveRange(user.Userquestprogresses);
+           }
+       
+           if (user.Userroles?.Any() == true)
+           {
+               _context.Userroles.RemoveRange(user.Userroles);
+           }
+       
+           if (user.Scoreboards?.Any() == true)
+           {
+               _context.Scoreboards.RemoveRange(user.Scoreboards);
+           }
+       
+           _context.Users.Remove(user);
+           await _context.SaveChangesAsync();
+       
+           return user;
+       }
+       
+
+    /*public async Task<User> DeleteUser(int id)
+    {
+        var user = await _context.Users.FindAsync(id);
+        if (user == null)
+        {
+            throw new Exception("User not found");
+        }
+
+        _context.Users.Remove(user);
+        await _context.SaveChangesAsync();
+
+        return user;
+    }*/
+    
+    
 }
