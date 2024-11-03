@@ -16,8 +16,7 @@ public class UserController : ControllerBase
         _userService = userService;
     }
 
-    [HttpPost]
-    [Route("create")]
+    [HttpPost("create")]
     public async Task<ActionResult<UserDto>> CreateUser(CreateUserDto createUserDto)
     {
         if (!ModelState.IsValid)
@@ -30,16 +29,16 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("getAll")]
-    public async Task<ActionResult<List<UserDto>>> GetAllUsers()
+    public async Task<ActionResult<List<UserDto>>> ReadAllUsers()
     {
-        var users = await _userService.GetAllUsers();
+        var users = await _userService.ReadAllUsers();
         return Ok(users);
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<UserDto>> GetUserById(int id)
+    public async Task<ActionResult<UserDto>> ReadUserById(int id)
     {
-        var user = await _userService.GetUserById(id);
+        var user = await _userService.ReadUserById(id);
 
         if (user == null)
         {
@@ -66,6 +65,18 @@ public class UserController : ControllerBase
             return NotFound(ex.Message);
         }
     }
-    
-    
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<UserDto>> DeleteUser(int id)
+    {
+        try
+        {
+            var deletedUser = await _userService.DeleteUser(id);
+            return Ok(UserDto.FromEntity(deletedUser));
+        }
+        catch (Exception ex)
+        {
+            return NotFound(new { Message = ex.Message });
+        }
+    }
 }

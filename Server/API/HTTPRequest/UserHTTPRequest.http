@@ -31,3 +31,6 @@ GET http://localhost:9000/User/1
 Content-Type: application/json
 
 ###
+
+DELETE http://localhost:9000/User/2
+Content-Type: application/json

@@ -14,7 +14,14 @@ using Service.Validators;
 var builder = WebApplication.CreateBuilder(args);
 
 #region Configuration
-// Configure app configuration, logging, and any custom settings
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader());
+});
+
 #endregion
 
 #region Data Access

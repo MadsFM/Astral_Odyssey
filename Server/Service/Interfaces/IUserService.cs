@@ -8,8 +8,9 @@ namespace Service.Interfaces;
 public interface IUserService
 {
     Task<UserDto> CreateUser(CreateUserDto createUserDto);
-    Task<List<UserDto>> GetAllUsers();
-    Task<UserDto?> GetUserById(int userId);
+    Task<List<UserDto>> ReadAllUsers();
+    Task<UserDto?> ReadUserById(int userId);
     Task<UserDto> UpdateUser(int userId, UpdateUserDto updateUserDto);
+    Task<User> DeleteUser(int id);
 
 }
