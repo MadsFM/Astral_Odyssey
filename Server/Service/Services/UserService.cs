@@ -13,11 +13,13 @@ public class UserService : IUserService
 {
     private readonly MyDbContext _context;
     private readonly IValidator<CreateUserDto> _createUserValidator;
+    private readonly IValidator<UpdateUserDto> _updateUserValidator;
 
-    public UserService(MyDbContext context, IValidator<CreateUserDto> createUserValidator)
+    public UserService(MyDbContext context, IValidator<CreateUserDto> createUserValidator, IValidator<UpdateUserDto> updateUserValidator)
     {
         _context = context;
         _createUserValidator = createUserValidator;
+        _updateUserValidator = updateUserValidator;
     }
 
 
@@ -78,6 +80,8 @@ public class UserService : IUserService
 
     public async Task<UserDto> UpdateUser(int userId, UpdateUserDto updateUserDto)
     {
+        await _updateUserValidator.ValidateAndThrowAsync(updateUserDto);
+        
         var user = await _context.Users.FindAsync(userId);
         if (user == null)
         {
@@ -102,8 +106,7 @@ public class UserService : IUserService
            {
                throw new Exception("User not found");
            }
-       
-           // Only remove related data if collections are not null
+           
            if (user.Userquestprogresses?.Any() == true)
            {
                _context.Userquestprogresses.RemoveRange(user.Userquestprogresses);
@@ -124,21 +127,4 @@ public class UserService : IUserService
        
            return user;
        }
-       
-
-    /*public async Task<User> DeleteUser(int id)
-    {
-        var user = await _context.Users.FindAsync(id);
-        if (user == null)
-        {
-            throw new Exception("User not found");
-        }
-
-        _context.Users.Remove(user);
-        await _context.SaveChangesAsync();
-
-        return user;
-    }*/
-    
-    
 }
