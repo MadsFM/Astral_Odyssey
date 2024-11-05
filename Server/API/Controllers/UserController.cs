@@ -18,6 +18,7 @@ public class UserController : ControllerBase
         _userService = userService;
     }
 
+    [AllowAnonymous]
     [HttpPost("create")]
     public async Task<ActionResult<UserDto>> CreateUser(CreateUserDto createUserDto)
     {
@@ -25,6 +26,8 @@ public class UserController : ControllerBase
         {
             return BadRequest(ModelState);
         }
+
+        createUserDto.RoleName = "Player";
 
         var createdUser = await _userService.CreateUser(createUserDto);
         return CreatedAtAction(nameof(CreateUser), new { id = createdUser.Userid }, createdUser);
