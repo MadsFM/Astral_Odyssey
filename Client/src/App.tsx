@@ -1,5 +1,5 @@
 import {Route, Routes} from "react-router-dom";
-import {ROUTES} from "./Constants/Routes.ts";
+import {ROUTES} from "./Helpers/Constants/Routes.ts";
 import LoginComponent from "./Components/LoginComponent.tsx";
 import UserListComponent from "./Components/User/UserListComponent.tsx";
 
