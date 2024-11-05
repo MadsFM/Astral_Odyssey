@@ -30,6 +30,7 @@ public class UserController : ControllerBase
         return CreatedAtAction(nameof(CreateUser), new { id = createdUser.Userid }, createdUser);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpGet("getAll")]
     public async Task<ActionResult<List<UserDto>>> ReadAllUsers()
     {
@@ -37,9 +38,17 @@ public class UserController : ControllerBase
         return Ok(users);
     }
 
+    [Authorize(Roles = "Admin, Player")]
     [HttpGet("getById/{id}")]
     public async Task<ActionResult<UserDto>> ReadUserById(int id)
     {
+        var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (User.IsInRole("Player") && currentUserId != id.ToString())
+        {
+            return Forbid("Players can only view their own profile!");
+        }
+        
         var user = await _userService.ReadUserById(id);
 
         if (user == null)
@@ -49,6 +58,7 @@ public class UserController : ControllerBase
         return Ok(user);
     }
 
+    [Authorize(Roles = "Admin, Player")]
     [HttpPatch("{id}")]
     public async Task<ActionResult<UserDto>> UpdateUser(int id, [FromBody] UpdateUserDto updateUserDto)
     {
@@ -59,6 +69,13 @@ public class UserController : ControllerBase
 
         try
         {
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (User.IsInRole("Player") && currentUserId != id.ToString())
+            {
+                return Forbid("Players can only delete their own account!");
+            }
+            
             var updateUser = await _userService.UpdateUser(id, updateUserDto);
             return Ok(updateUser);
         }
