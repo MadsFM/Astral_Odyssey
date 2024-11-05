@@ -27,13 +27,13 @@ public class UserController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        createUserDto.RoleName = "Player";
+       createUserDto.RoleName = "Player";
 
         var createdUser = await _userService.CreateUser(createUserDto);
         return CreatedAtAction(nameof(CreateUser), new { id = createdUser.Userid }, createdUser);
     }
 
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     [HttpGet("getAll")]
     public async Task<ActionResult<List<UserDto>>> ReadAllUsers()
     {
@@ -41,7 +41,7 @@ public class UserController : ControllerBase
         return Ok(users);
     }
 
-    [Authorize(Roles = "Admin, Player")]
+    //[Authorize(Roles = "Admin, Player")]
     [HttpGet("getById/{id}")]
     public async Task<ActionResult<UserDto>> ReadUserById(int id)
     {
@@ -61,7 +61,7 @@ public class UserController : ControllerBase
         return Ok(user);
     }
 
-    [Authorize(Roles = "Admin, Player")]
+    //[Authorize(Roles = "Admin, Player")]
     [HttpPatch("{id}")]
     public async Task<ActionResult<UserDto>> UpdateUser(int id, [FromBody] UpdateUserDto updateUserDto)
     {
@@ -88,7 +88,7 @@ public class UserController : ControllerBase
         }
     }
 
-    [Authorize(Roles = "Admin, Player")]
+    //[Authorize(Roles = "Admin, Player")]
     [HttpDelete("{id}")]
     public async Task<ActionResult<UserDto>> DeleteUser(int id)
     {

@@ -1,51 +1,132 @@
--- UserRoles join table with cascade delete on both foreign keys
-CREATE TABLE UserRoles (
-                           UserID INT NOT NULL,
-                           RoleID INT NOT NULL,
-                           CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                           PRIMARY KEY (UserID, RoleID),
-                           FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE,
-                           FOREIGN KEY (RoleID) REFERENCES Roles(RoleID) ON DELETE CASCADE
+-- Drop the existing schema if needed
+DROP SCHEMA public CASCADE;
+CREATE SCHEMA public;
+
+create table universes
+(
+    universeid  serial
+        primary key,
+    name        varchar(100) not null,
+    description text
 );
 
--- Planets table
-CREATE TABLE Planets (
-                         PlanetID SERIAL PRIMARY KEY,
-                         Name VARCHAR(100) NOT NULL,
-                         Description TEXT,
-                         UniverseID INT NOT NULL,
-                         IsDiscovered BOOLEAN DEFAULT FALSE,
-                         FOREIGN KEY (UniverseID) REFERENCES Universes(UniverseID) ON DELETE CASCADE
+alter table universes
+    owner to "Odyssey";
+
+create table users
+(
+    userid       serial
+        primary key,
+    username     varchar(50)  not null
+        unique,
+    email        varchar(100) not null
+        unique,
+    passwordhash varchar(255) not null,
+    createdat    timestamp default CURRENT_TIMESTAMP
 );
 
--- Quests table 
-CREATE TABLE Quests (
-                        QuestID SERIAL PRIMARY KEY,
-                        Title VARCHAR(100) NOT NULL,
-                        Description TEXT,
-                        PlanetID INT,
-                        UniverseID INT,
-                        IsCompleted BOOLEAN DEFAULT FALSE,
-                        FOREIGN KEY (PlanetID) REFERENCES Planets(PlanetID) ON DELETE CASCADE, 
-                        FOREIGN KEY (UniverseID) REFERENCES Universes(UniverseID) ON DELETE CASCADE 
+alter table users
+    owner to "Odyssey";
+
+create table roles
+(
+    roleid   serial
+        primary key,
+    rolename varchar(50) not null
+        unique
 );
 
--- Scoreboard table 
-CREATE TABLE Scoreboard (
-                            ScoreID SERIAL PRIMARY KEY,
-                            UserID INT NOT NULL,
-                            Points INT NOT NULL,
-                            UpdatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                            FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE 
+alter table roles
+    owner to "Odyssey";
+
+-- Insert predefined roles into the roles table
+INSERT INTO roles (rolename)
+VALUES ('Admin'),
+       ('Player'),
+       ('Game Manager');
+
+
+create table userroles
+(
+    userid    integer not null
+        references users on delete cascade,
+    roleid    integer not null
+        references roles on delete cascade,
+    createdat timestamp default CURRENT_TIMESTAMP,
+    primary key (userid, roleid)
 );
 
--- UserQuestProgress table 
-CREATE TABLE UserQuestProgress (
-                                   ProgressID SERIAL PRIMARY KEY,
-                                   UserID INT NOT NULL,
-                                   QuestID INT NOT NULL,
-                                   IsCompleted BOOLEAN DEFAULT FALSE,
-                                   LastUpdated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                                   FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE, 
-                                   FOREIGN KEY (QuestID) REFERENCES Quests(QuestID) ON DELETE CASCADE 
+alter table userroles
+    owner to "Odyssey";
+
+create table planets
+(
+    planetid     serial
+        primary key,
+    name         varchar(100) not null,
+    description  text,
+    universeid   integer      not null
+        references universes on delete cascade,
+    isdiscovered boolean default false
 );
+
+alter table planets
+    owner to "Odyssey";
+
+create table quests
+(
+    questid     serial
+        primary key,
+    title       varchar(100) not null,
+    description text,
+    planetid    integer
+        references planets on delete cascade,
+    universeid  integer
+        references universes on delete cascade,
+    iscompleted boolean default false
+);
+
+alter table quests
+    owner to "Odyssey";
+
+create table scoreboard
+(
+    scoreid   serial
+        primary key,
+    userid    integer not null
+        references users on delete cascade,
+    points    integer not null,
+    updatedat timestamp default CURRENT_TIMESTAMP
+);
+
+alter table scoreboard
+    owner to "Odyssey";
+
+create table quizzes
+(
+    quizid   serial
+        primary key,
+    question text         not null,
+    answer   varchar(100) not null,
+    hint     text,
+    questid  integer
+        references quests on delete cascade
+);
+
+alter table quizzes
+    owner to "Odyssey";
+
+create table userquestprogress
+(
+    progressid  serial
+        primary key,
+    userid      integer not null
+        references users on delete cascade,
+    questid     integer not null
+        references quests on delete cascade,
+    iscompleted boolean   default false,
+    lastupdated timestamp default CURRENT_TIMESTAMP
+);
+
+alter table userquestprogress
+    owner to "Odyssey";

@@ -1,12 +1,12 @@
-### create user
+### create player
 POST http://localhost:9000/User/create
 Content-Type: application/json
 
 {
-  "username": "TestUser",
-  "email": "test2@user.dk",
-  "passwordhash": "Password1!",
-  "roleName": "Player"
+  "username": "TestAdmin",
+  "email": "test@admin.dk",
+  "passwordhash": "Password2!",
+  "roleName": "Admin"
 }
 
 ###
