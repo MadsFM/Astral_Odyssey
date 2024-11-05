@@ -26,8 +26,8 @@ public class UserController : ControllerBase
         {
             return BadRequest(ModelState);
         }
-
-       createUserDto.RoleName = "Player";
+        
+        createUserDto.RoleName = "Player";
 
         var createdUser = await _userService.CreateUser(createUserDto);
         return CreatedAtAction(nameof(CreateUser), new { id = createdUser.Userid }, createdUser);
