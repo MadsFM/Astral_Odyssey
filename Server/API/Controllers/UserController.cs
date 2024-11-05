@@ -1,3 +1,5 @@
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Service.Interfaces;
 using Service.Transfermodels.Request;
@@ -66,11 +68,19 @@ public class UserController : ControllerBase
         }
     }
 
+    [Authorize(Roles = "Admin, Player")]
     [HttpDelete("{id}")]
     public async Task<ActionResult<UserDto>> DeleteUser(int id)
     {
         try
         {
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (User.IsInRole("Player") && currentUserId != id.ToString())
+            {
+                return Forbid("Players can only delete their own account!");
+            }
+            
             var deletedUser = await _userService.DeleteUser(id);
             return Ok(UserDto.FromEntity(deletedUser));
         }
