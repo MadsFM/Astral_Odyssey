@@ -50,7 +50,10 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 builder.Services.AddFluentValidationAutoValidation()
     .AddFluentValidationClientsideAdapters();
 builder.Services.AddValidatorsFromAssemblyContaining<CreateUserDto>();
-builder.Services.AddOpenApiDocument();
+builder.Services.AddOpenApiDocument(configuration =>
+{
+    configuration.AddTypeToSwagger<User>();
+});
 #endregion
 
 #region Swagger
