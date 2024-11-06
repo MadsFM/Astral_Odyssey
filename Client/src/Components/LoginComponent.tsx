@@ -11,13 +11,8 @@ function LoginComponent(){
 
     const handleLogin = async () => {
         try {
-            const response = await api.user.login({ username, password });
+            const response = await api.user.getAllList();
 
-            if (response.data.success) {
-                alert('Login successful');
-            } else {
-                setError('Invalid username or password');
-            }
         } catch (error) {
             setError('Error logging in');
             console.error(error);

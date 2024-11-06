@@ -9,6 +9,7 @@ public class UserDto
     public string Email { get; set; } = null!;
     
     public string PasswordHash { get; set; } = null!;
+    public string Token { get; set; } = null!;
     public DateTime? Createdat { get; set; }
 
     public ICollection<int> ScoreboardIds { get; set; } = new List<int>();

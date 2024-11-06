@@ -12,5 +12,5 @@ public interface IUserService
     Task<UserDto?> ReadUserById(int userId);
     Task<UserDto> UpdateUser(int userId, UpdateUserDto updateUserDto);
     Task<User> DeleteUser(int id);
-
+    Task<UserDto?> Login(LoginUserDto loginUserDto);
 }

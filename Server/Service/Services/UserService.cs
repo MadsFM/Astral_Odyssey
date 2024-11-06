@@ -1,8 +1,13 @@
-﻿using DataAccess;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using DataAccess;
 using BCrypt.Net;
 using DataAccess.Models;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using Service.Interfaces;
 using Service.Transfermodels.Request;
 using Service.Transfermodels.Response;
@@ -14,12 +19,15 @@ public class UserService : IUserService
     private readonly MyDbContext _context;
     private readonly IValidator<CreateUserDto> _createUserValidator;
     private readonly IValidator<UpdateUserDto> _updateUserValidator;
+    private readonly string _jwtKey;
 
-    public UserService(MyDbContext context, IValidator<CreateUserDto> createUserValidator, IValidator<UpdateUserDto> updateUserValidator)
+    public UserService(MyDbContext context, IValidator<CreateUserDto> createUserValidator, 
+        IValidator<UpdateUserDto> updateUserValidator, IConfiguration configuration)
     {
         _context = context;
         _createUserValidator = createUserValidator;
         _updateUserValidator = updateUserValidator;
+        _jwtKey = configuration["Jwt:Key"];
     }
 
 
@@ -127,4 +135,39 @@ public class UserService : IUserService
        
            return user;
        }
+
+    public async Task<UserDto?> Login(LoginUserDto loginUserDto)
+    {
+        var user = await _context.Users
+            .Include(u => u.Userroles)
+            .ThenInclude(ur => ur.Role)
+            .FirstOrDefaultAsync(u => u.Username == loginUserDto.Username);
+
+        if (user == null || !BCrypt.Net.BCrypt.Verify(loginUserDto.Password, user.Passwordhash))
+        {
+            return null;
+        }
+
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var key = Encoding.ASCII.GetBytes(_jwtKey);
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+            Subject = new ClaimsIdentity(new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Userid.ToString()),
+                new Claim(ClaimTypes.Name, user.Username),
+                new Claim(ClaimTypes.Email, user.Email)
+            }.Concat(user.Userroles.Select(ur => new Claim(ClaimTypes.Role, ur.Role.Rolename)))),
+            Expires = DateTime.UtcNow.AddMinutes(15),
+            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
+                SecurityAlgorithms.HmacSha256Signature)
+        };
+        var token = tokenHandler.CreateToken(tokenDescriptor);
+        var tokenString = tokenHandler.WriteToken(token);
+
+        var userDto = UserDto.FromEntity(user);
+        userDto.Token = tokenString;
+
+        return userDto;
+    }
 }
