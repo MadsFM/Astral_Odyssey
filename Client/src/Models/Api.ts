@@ -51,6 +51,7 @@ export interface UserDto {
   userid?: number;
   username?: string | null;
   email?: string | null;
+  passwordHash?: string | null;
   /** @format date-time */
   createdat?: string | null;
   scoreboardIds?: number[] | null;
