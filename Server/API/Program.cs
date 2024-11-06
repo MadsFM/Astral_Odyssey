@@ -1,11 +1,14 @@
+using System.Text;
 using System.Text.Json.Serialization;
 using DataAccess;
 using DataAccess.Models;
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Service;
 using Service.Interfaces;
 using Service.Transfermodels.Request;
@@ -24,6 +27,31 @@ builder.Services.AddCors(options =>
 
 #endregion
 
+#region Security
+
+builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(options =>
+    {
+        var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]);
+
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(key)
+        };
+    });
+
+#endregion
+
 #region Data Access
 // Configure the database context to use PostgreSQL (replace connection string)
 builder.Services.AddOptionsWithValidateOnStart<AppOptions>()
@@ -38,7 +66,6 @@ builder.Services.AddDbContext<MyDbContext>((serviceProvider, options) =>
     options.UseNpgsql(Environment.GetEnvironmentVariable("AstralO") ?? appOptions.AstralO);
 });
 #endregion
-
 
 #region Services
 
@@ -64,13 +91,14 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+
 #region Middleware
 
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
-    app.UseSwagger();       // Enable Swagger in development
-    app.UseSwaggerUI();     // Enable Swagger UI in development
+    app.UseSwagger();       
+    app.UseSwaggerUI();  
 }
 else
 {
@@ -82,11 +110,13 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseCors("AllowAll");
 
 #region Security Middleware
 // Enable authentication and authorization
 app.UseAuthentication();
 app.UseAuthorization();
+
 #endregion
 
 #endregion

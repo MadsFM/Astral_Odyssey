@@ -7,6 +7,7 @@ using Service;
 using Service.Transfermodels.Request;
 using Service.Transfermodels.Response;
 using DataAccess.Models;
+using Microsoft.Extensions.Configuration;
 using ValidationResult = FluentValidation.Results.ValidationResult;
 
 namespace Test.UnitTests;
@@ -16,6 +17,7 @@ public class UserUnitTest
     private readonly MyDbContext _context;
     private readonly Mock<IValidator<CreateUserDto>> _mockCreateUserValidator;
     private readonly Mock<IValidator<UpdateUserDto>> _mockUpdateUserValidator;
+    private readonly Mock<IConfiguration> _mockConfiguration;
     private readonly UserService _userService;
 
     public UserUnitTest()
@@ -24,10 +26,18 @@ public class UserUnitTest
             .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
             .Options;
         _context = new MyDbContext(options);
+        
         _mockCreateUserValidator = new Mock<IValidator<CreateUserDto>>();
         _mockUpdateUserValidator = new Mock<IValidator<UpdateUserDto>>();
+        
+        _mockConfiguration = new Mock<IConfiguration>();
+        _mockConfiguration.Setup(c => c["Jwt:Key"]).Returns("your_test_secret_key");
+        _mockConfiguration.Setup(c => c["Jwt:Issuer"]).Returns("TestIssuer");
+        _mockConfiguration.Setup(c => c["Jwt:Audience"]).Returns("TestAudience");
+        _mockConfiguration.Setup(c => c["Jwt:ExpiryInMinutes"]).Returns("60");
+        
         _userService = new UserService(_context, _mockCreateUserValidator.Object, 
-            _mockUpdateUserValidator.Object);
+            _mockUpdateUserValidator.Object, _mockConfiguration.Object);
     }
 
     [Fact]

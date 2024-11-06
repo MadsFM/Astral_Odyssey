@@ -1,21 +1,31 @@
-import {Api} from "../Models/Api.ts";
-import {useState} from "react";
+import { Api } from "../Models/Api.ts";
+import { useState } from "react";
 
 const api = new Api();
 
-function LoginComponent(){
+function LoginComponent() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
-
     const handleLogin = async () => {
         try {
-            const response = await api.user.getAllList();
+            const res = await api.user.loginCreate({username, password});
+            if (res.data && res.data.token) {
+                localStorage.setItem("authToken", res.data.token);
+                const token = localStorage.getItem("authToken");
+                const headers = {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                };
 
+                alert("Login successful");
+            } else {
+                setError("Invalid username or password");
+            }
         } catch (error) {
-            setError('Error logging in');
-            console.error(error);
+            console.error("Login failed:", error);
+            setError("An error occurred during login process, please try again");
         }
     };
 

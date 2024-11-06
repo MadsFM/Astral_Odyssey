@@ -3,10 +3,10 @@ POST http://localhost:9000/User/create
 Content-Type: application/json
 
 {
-  "username": "TestAdmin",
-  "email": "test@admin.dk",
-  "passwordhash": "Password2!",
-  "roleName": "Admin"
+  "username": "TestUser",
+  "email": "test@user.dk",
+  "passwordhash": "Password1!",
+  "roleName": "Player"
 }
 
 ###
@@ -34,3 +34,15 @@ Content-Type: application/json
 
 DELETE http://localhost:9000/User/2
 Content-Type: application/json
+
+### login
+
+POST http://localhost:9000/User/login
+Content-Type: application/json
+
+{
+  "username": "TestAdmin",
+  "password": "Password2!"
+}
+
+###

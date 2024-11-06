@@ -109,4 +109,18 @@ public class UserController : ControllerBase
             return NotFound(new { Message = ex.Message });
         }
     }
+
+    [AllowAnonymous]
+    [HttpPost("Login")]
+    public async Task<ActionResult<UserDto>> Login([FromBody] LoginUserDto loginUserDto)
+    {
+        var userDto = await _userService.Login(loginUserDto);
+
+        if (userDto == null)
+        {
+            return Unauthorized(new { Message = "Invalid username or password" });
+        }
+
+        return Ok(userDto);
+    }
 }

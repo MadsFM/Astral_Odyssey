@@ -19,7 +19,7 @@ public class UserService : IUserService
     private readonly MyDbContext _context;
     private readonly IValidator<CreateUserDto> _createUserValidator;
     private readonly IValidator<UpdateUserDto> _updateUserValidator;
-    private readonly string _jwtKey;
+    private readonly IConfiguration _configuration;
 
     public UserService(MyDbContext context, IValidator<CreateUserDto> createUserValidator, 
         IValidator<UpdateUserDto> updateUserValidator, IConfiguration configuration)
@@ -27,7 +27,7 @@ public class UserService : IUserService
         _context = context;
         _createUserValidator = createUserValidator;
         _updateUserValidator = updateUserValidator;
-        _jwtKey = configuration["Jwt:Key"];
+        _configuration = configuration;
     }
 
 
@@ -148,26 +148,35 @@ public class UserService : IUserService
             return null;
         }
 
+        // Generate JWT token
         var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes(_jwtKey);
+        var key = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]);
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Userid.ToString()),
                 new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.Email, user.Email)
-            }.Concat(user.Userroles.Select(ur => new Claim(ClaimTypes.Role, ur.Role.Rolename)))),
-            Expires = DateTime.UtcNow.AddMinutes(15),
-            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
-                SecurityAlgorithms.HmacSha256Signature)
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Role, user.Userroles.FirstOrDefault()?.Role.Rolename ?? "Player")
+            }),
+            Expires = DateTime.UtcNow.AddMinutes(double.Parse(_configuration["Jwt:ExpiryInMinutes"])),
+            Issuer = _configuration["Jwt:Issuer"],
+            Audience = _configuration["Jwt:Audience"],
+            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
         };
+
         var token = tokenHandler.CreateToken(tokenDescriptor);
         var tokenString = tokenHandler.WriteToken(token);
 
-        var userDto = UserDto.FromEntity(user);
-        userDto.Token = tokenString;
-
-        return userDto;
+        // Create a UserDto with the token
+        return new UserDto
+        {
+            Userid = user.Userid,
+            Username = user.Username,
+            Email = user.Email,
+            Roles = user.Userroles.Select(ur => ur.Role.Rolename).ToList(),
+            Token = tokenString
+        };
     }
 }

@@ -28,6 +28,11 @@ export interface CreateUserDto {
   roleName?: string | null;
 }
 
+export interface LoginUserDto {
+  username?: string | null;
+  password?: string | null;
+}
+
 export interface UpdateUserDto {
   /**
    * @minLength 0
@@ -52,6 +57,7 @@ export interface UserDto {
   username?: string | null;
   email?: string | null;
   passwordHash?: string | null;
+  token?: string | null;
   /** @format date-time */
   createdat?: string | null;
   scoreboardIds?: number[] | null;
@@ -104,11 +110,15 @@ export class HttpClient<SecurityDataType = unknown> {
   private format?: ResponseType;
 
   constructor({ securityWorker, secure, format, ...axiosConfig }: ApiConfig<SecurityDataType> = {}) {
-    this.instance = axios.create({ ...axiosConfig, baseURL: axiosConfig.baseURL || "" });
+    this.instance = axios.create({
+      ...axiosConfig,
+      baseURL: "http://localhost:9000", // Explicitly set baseURL here
+    });
     this.secure = secure;
     this.format = format;
     this.securityWorker = securityWorker;
   }
+
 
   public setSecurityData = (data: SecurityDataType | null) => {
     this.securityData = data;
@@ -274,6 +284,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       this.request<UserDto, any>({
         path: `/User/${id}`,
         method: "DELETE",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags User
+     * @name LoginCreate
+     * @request POST:/User/Login
+     */
+    loginCreate: (data: LoginUserDto, params: RequestParams = {}) =>
+      this.request<UserDto, any>({
+        path: `/User/Login`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
         format: "json",
         ...params,
       }),
