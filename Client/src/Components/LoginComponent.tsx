@@ -20,8 +20,12 @@ function LoginComponent() {
                 setError("Invalid username or password");
             }
         } catch (error) {
-            console.error("Login failed:", error);
-            setError("An error occurred during login process, please try again");
+            if (error.response && error.response.status === 401) {
+                setError("Invalid username or password");
+            } else {
+                console.error("Login failed:", error);
+                setError("An error occurred during login process, please try again");
+            }
         }
     };
 
