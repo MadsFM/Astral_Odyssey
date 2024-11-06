@@ -1,4 +1,4 @@
-import { Api } from "../Models/Api.ts";
+import { Api } from "./imports.ts";
 import { useState } from "react";
 
 const api = new Api();
@@ -13,12 +13,6 @@ function LoginComponent() {
             const res = await api.user.loginCreate({username, password});
             if (res.data && res.data.token) {
                 localStorage.setItem("authToken", res.data.token);
-                const token = localStorage.getItem("authToken");
-                const headers = {
-                    Authorization: `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                };
-
                 alert("Login successful");
             } else {
                 setError("Invalid username or password");

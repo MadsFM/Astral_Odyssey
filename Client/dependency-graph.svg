@@ -136,102 +136,102 @@
 </a>
 </g>
 </g>
-<!-- src/Helpers/index.ts -->
+<!-- src/Helpers/imports.ts -->
 <g id="node7" class="node">
-<title>src/Helpers/index.ts</title>
-<g id="a_node7"><a xlink:href="src/Helpers/index.ts" xlink:title="index.ts">
+<title>src/Helpers/imports.ts</title>
+<g id="a_node7"><a xlink:href="src/Helpers/imports.ts" xlink:title="imports.ts">
 <path fill="#ddfeff" stroke="black" d="M518.33,-195.88C518.33,-195.88 476.17,-195.88 476.17,-195.88 473.21,-195.88 470.25,-192.92 470.25,-189.96 470.25,-189.96 470.25,-184.04 470.25,-184.04 470.25,-181.08 473.21,-178.12 476.17,-178.12 476.17,-178.12 518.33,-178.12 518.33,-178.12 521.29,-178.12 524.25,-181.08 524.25,-184.04 524.25,-184.04 524.25,-189.96 524.25,-189.96 524.25,-192.92 521.29,-195.88 518.33,-195.88"/>
-<text text-anchor="start" x="481.5" y="-183.32" font-family="Helvetica,sans-Serif" font-size="9.00">index.ts</text>
+<text text-anchor="start" x="481.5" y="-183.32" font-family="Helvetica,sans-Serif" font-size="9.00">imports.ts</text>
 </a>
 </g>
 </g>
-<!-- src/Atoms/imports.ts&#45;&gt;src/Helpers/index.ts -->
+<!-- src/Atoms/imports.ts&#45;&gt;src/Helpers/imports.ts -->
 <g id="edge4" class="edge">
-<title>src/Atoms/imports.ts&#45;&gt;src/Helpers/index.ts</title>
+<title>src/Atoms/imports.ts&#45;&gt;src/Helpers/imports.ts</title>
 <path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M427.99,-82.32C433.77,-92.9 443.09,-110.8 449.25,-127 456.63,-146.4 448.13,-156.34 461.75,-172 462.62,-173 463.56,-173.93 464.57,-174.81"/>
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="468,-179.82 464.33,-174.63 470.43,-176.4 468,-179.82"/>
 </g>
-<!-- src/Models/index.ts -->
+<!-- src/Models/imports.ts -->
 <g id="node8" class="node">
-<title>src/Models/index.ts</title>
-<g id="a_node8"><a xlink:href="src/Models/index.ts" xlink:title="index.ts">
+<title>src/Models/imports.ts</title>
+<g id="a_node8"><a xlink:href="src/Models/imports.ts" xlink:title="imports.ts">
 <path fill="#ddfeff" stroke="black" d="M604.46,-105.88C604.46,-105.88 562.29,-105.88 562.29,-105.88 559.33,-105.88 556.38,-102.92 556.38,-99.96 556.38,-99.96 556.38,-94.04 556.38,-94.04 556.38,-91.08 559.33,-88.12 562.29,-88.12 562.29,-88.12 604.46,-88.12 604.46,-88.12 607.42,-88.12 610.38,-91.08 610.38,-94.04 610.38,-94.04 610.38,-99.96 610.38,-99.96 610.38,-102.92 607.42,-105.88 604.46,-105.88"/>
-<text text-anchor="start" x="567.62" y="-93.33" font-family="Helvetica,sans-Serif" font-size="9.00">index.ts</text>
+<text text-anchor="start" x="567.62" y="-93.33" font-family="Helvetica,sans-Serif" font-size="9.00">imports.ts</text>
 </a>
 </g>
 </g>
-<!-- src/Atoms/imports.ts&#45;&gt;src/Models/index.ts -->
+<!-- src/Atoms/imports.ts&#45;&gt;src/Models/imports.ts -->
 <g id="edge5" class="edge">
-<title>src/Atoms/imports.ts&#45;&gt;src/Models/index.ts</title>
+<title>src/Atoms/imports.ts&#45;&gt;src/Models/imports.ts</title>
 <path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M449.47,-77.02C476.91,-81.14 519.68,-87.57 549.26,-92.02"/>
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="554.8,-94.98 549.18,-92.01 555.42,-90.82 554.8,-94.98"/>
 </g>
-<!-- src/Helpers/index.ts&#45;&gt;src/Helpers/Constants/Routes.ts -->
+<!-- src/Helpers/imports.ts&#45;&gt;src/Helpers/Constants/Routes.ts -->
 <g id="edge13" class="edge">
-<title>src/Helpers/index.ts&#45;&gt;src/Helpers/Constants/Routes.ts</title>
+<title>src/Helpers/imports.ts&#45;&gt;src/Helpers/Constants/Routes.ts</title>
 <path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M524.41,-180.16C532.24,-178.11 540.95,-175.83 549.17,-173.68"/>
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="555.51,-174.2 549.17,-173.68 554.45,-170.13 555.51,-174.2"/>
 </g>
-<!-- src/Models/index.ts&#45;&gt;src/Models/Api.ts -->
+<!-- src/Models/imports.ts&#45;&gt;src/Models/Api.ts -->
 <g id="edge17" class="edge">
-<title>src/Models/index.ts&#45;&gt;src/Models/Api.ts</title>
+<title>src/Models/imports.ts&#45;&gt;src/Models/Api.ts</title>
 <path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M610.57,-97C615.96,-97 621.69,-97 627.28,-97"/>
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="633.25,-99.1 627.25,-97 633.25,-94.9 633.25,-99.1"/>
 </g>
-<!-- src/Atoms/index.ts -->
+<!-- src/Atoms/imports.ts -->
 <g id="node9" class="node">
-<title>src/Atoms/index.ts</title>
-<g id="a_node9"><a xlink:href="src/Atoms/index.ts" xlink:title="index.ts">
+<title>src/Atoms/imports.ts</title>
+<g id="a_node9"><a xlink:href="src/Atoms/imports.ts" xlink:title="imports.ts">
 <path fill="#ddfeff" stroke="black" d="M442.83,-51.88C442.83,-51.88 400.67,-51.88 400.67,-51.88 397.71,-51.88 394.75,-48.92 394.75,-45.96 394.75,-45.96 394.75,-40.04 394.75,-40.04 394.75,-37.08 397.71,-34.12 400.67,-34.12 400.67,-34.12 442.83,-34.12 442.83,-34.12 445.79,-34.12 448.75,-37.08 448.75,-40.04 448.75,-40.04 448.75,-45.96 448.75,-45.96 448.75,-48.92 445.79,-51.88 442.83,-51.88"/>
-<text text-anchor="start" x="406" y="-39.33" font-family="Helvetica,sans-Serif" font-size="9.00">index.ts</text>
+<text text-anchor="start" x="406" y="-39.33" font-family="Helvetica,sans-Serif" font-size="9.00">imports.ts</text>
 </a>
 </g>
 </g>
-<!-- src/Atoms/index.ts&#45;&gt;src/Atoms/UserAtom.tsx -->
+<!-- src/Atoms/imports.ts&#45;&gt;src/Atoms/UserAtom.tsx -->
 <g id="edge6" class="edge">
-<title>src/Atoms/index.ts&#45;&gt;src/Atoms/UserAtom.tsx</title>
+<title>src/Atoms/imports.ts&#45;&gt;src/Atoms/UserAtom.tsx</title>
 <path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M448.87,-43C450.84,-43 452.86,-43 454.9,-43"/>
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="460.86,-45.1 454.86,-43 460.86,-40.9 460.86,-45.1"/>
 </g>
-<!-- src/Components/index.ts -->
+<!-- src/Components/imports.ts -->
 <g id="node11" class="node">
-<title>src/Components/index.ts</title>
-<g id="a_node11"><a xlink:href="src/Components/index.ts" xlink:title="index.ts">
+<title>src/Components/imports.ts</title>
+<g id="a_node11"><a xlink:href="src/Components/imports.ts" xlink:title="imports.ts">
 <path fill="#ddfeff" stroke="black" d="M248.71,-142.88C248.71,-142.88 206.54,-142.88 206.54,-142.88 203.58,-142.88 200.62,-139.92 200.62,-136.96 200.62,-136.96 200.62,-131.04 200.62,-131.04 200.62,-128.08 203.58,-125.12 206.54,-125.12 206.54,-125.12 248.71,-125.12 248.71,-125.12 251.67,-125.12 254.62,-128.08 254.62,-131.04 254.62,-131.04 254.62,-136.96 254.62,-136.96 254.62,-139.92 251.67,-142.88 248.71,-142.88"/>
-<text text-anchor="start" x="211.88" y="-130.32" font-family="Helvetica,sans-Serif" font-size="9.00">index.ts</text>
+<text text-anchor="start" x="211.88" y="-130.32" font-family="Helvetica,sans-Serif" font-size="9.00">imports.ts</text>
 </a>
 </g>
 </g>
-<!-- src/Components/index.ts&#45;&gt;src/Helpers/index.ts -->
+<!-- src/Components/imports.ts&#45;&gt;src/Helpers/imports.ts -->
 <g id="edge9" class="edge">
-<title>src/Components/index.ts&#45;&gt;src/Helpers/index.ts</title>
+<title>src/Components/imports.ts&#45;&gt;src/Helpers/imports.ts</title>
 <path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M254.86,-138.42C268.2,-140.78 284.63,-143.83 299.25,-147 302.83,-147.78 303.67,-148.19 307.25,-149 336.44,-155.58 417.07,-171.51 463.03,-180.52"/>
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="468.44,-183.71 462.96,-180.5 469.25,-179.59 468.44,-183.71"/>
 </g>
-<!-- src/Components/index.ts&#45;&gt;src/Models/index.ts -->
+<!-- src/Components/imports.ts&#45;&gt;src/Models/imports.ts -->
 <g id="edge11" class="edge">
-<title>src/Components/index.ts&#45;&gt;src/Models/index.ts</title>
+<title>src/Components/imports.ts&#45;&gt;src/Models/imports.ts</title>
 <path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M254.81,-136.08C270.1,-137.19 289.75,-138.44 307.25,-139 338.79,-140 346.75,-140.94 378.25,-139 450.66,-134.55 470.99,-140.58 540.25,-119 547.46,-116.75 554.89,-113.3 561.48,-109.8"/>
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="567.88,-108.63 561.62,-109.72 565.84,-104.96 567.88,-108.63"/>
 </g>
-<!-- src/Components/index.ts&#45;&gt;src/Atoms/index.ts -->
+<!-- src/Components/imports.ts&#45;&gt;src/Atoms/imports.ts -->
 <g id="edge8" class="edge">
-<title>src/Components/index.ts&#45;&gt;src/Atoms/index.ts</title>
+<title>src/Components/imports.ts&#45;&gt;src/Atoms/imports.ts</title>
 <path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M254.78,-135.44C269.95,-134.78 288.19,-131.13 299.25,-119 319.75,-96.51 285.24,-72.01 307.25,-51 328.15,-31.05 362.21,-31.29 387.58,-35.15"/>
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="393.15,-38.23 387.58,-35.15 393.85,-34.09 393.15,-38.23"/>
 </g>
-<!-- src/Hooks/index.ts -->
+<!-- src/Hooks/imports.ts -->
 <g id="node12" class="node">
-<title>src/Hooks/index.ts</title>
-<g id="a_node12"><a xlink:href="src/Hooks/index.ts" xlink:title="index.ts">
+<title>src/Hooks/imports.ts</title>
+<g id="a_node12"><a xlink:href="src/Hooks/imports.ts" xlink:title="imports.ts">
 <path fill="#ddfeff" stroke="black" d="M363.83,-79.88C363.83,-79.88 321.67,-79.88 321.67,-79.88 318.71,-79.88 315.75,-76.92 315.75,-73.96 315.75,-73.96 315.75,-68.04 315.75,-68.04 315.75,-65.08 318.71,-62.12 321.67,-62.12 321.67,-62.12 363.83,-62.12 363.83,-62.12 366.79,-62.12 369.75,-65.08 369.75,-68.04 369.75,-68.04 369.75,-73.96 369.75,-73.96 369.75,-76.92 366.79,-79.88 363.83,-79.88"/>
-<text text-anchor="start" x="327" y="-67.33" font-family="Helvetica,sans-Serif" font-size="9.00">index.ts</text>
+<text text-anchor="start" x="327" y="-67.33" font-family="Helvetica,sans-Serif" font-size="9.00">imports.ts</text>
 </a>
 </g>
 </g>
-<!-- src/Components/index.ts&#45;&gt;src/Hooks/index.ts -->
+<!-- src/Components/imports.ts&#45;&gt;src/Hooks/imports.ts -->
 <g id="edge10" class="edge">
-<title>src/Components/index.ts&#45;&gt;src/Hooks/index.ts</title>
+<title>src/Components/imports.ts&#45;&gt;src/Hooks/imports.ts</title>
 <path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M254.96,-134.91C269.81,-133.99 287.65,-130.27 299.25,-119 310.07,-108.48 297.54,-97.55 307.25,-86 308.1,-84.99 309.03,-84.04 310.03,-83.16"/>
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="315.87,-81.53 309.78,-83.34 313.41,-78.12 315.87,-81.53"/>
 </g>
@@ -253,9 +253,9 @@
 </a>
 </g>
 </g>
-<!-- src/Helpers/imports.ts&#45;&gt;src/Models/index.ts -->
+<!-- src/Helpers/imports.ts&#45;&gt;src/Models/imports.ts -->
 <g id="edge12" class="edge">
-<title>src/Helpers/imports.ts&#45;&gt;src/Models/index.ts</title>
+<title>src/Helpers/imports.ts&#45;&gt;src/Models/imports.ts</title>
 <path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M518.51,-147.69C525.61,-144.09 533.49,-139.7 540.25,-135 550.36,-127.96 560.65,-118.72 568.53,-111.12"/>
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="574.33,-108.36 568.58,-111.07 571.38,-105.37 574.33,-108.36"/>
 </g>
@@ -268,21 +268,21 @@
 </a>
 </g>
 </g>
-<!-- src/Hooks/imports.ts&#45;&gt;src/Helpers/index.ts -->
+<!-- src/Hooks/imports.ts&#45;&gt;src/Helpers/imports.ts -->
 <g id="edge15" class="edge">
-<title>src/Hooks/imports.ts&#45;&gt;src/Helpers/index.ts</title>
+<title>src/Hooks/imports.ts&#45;&gt;src/Helpers/imports.ts</title>
 <path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M357.93,-110.37C379.75,-124.59 423.07,-152.06 461.75,-172 463.55,-172.93 465.41,-173.85 467.3,-174.75"/>
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="471.99,-179.23 467.42,-174.81 473.75,-175.41 471.99,-179.23"/>
 </g>
-<!-- src/Hooks/imports.ts&#45;&gt;src/Models/index.ts -->
+<!-- src/Hooks/imports.ts&#45;&gt;src/Models/imports.ts -->
 <g id="edge16" class="edge">
-<title>src/Hooks/imports.ts&#45;&gt;src/Models/index.ts</title>
+<title>src/Hooks/imports.ts&#45;&gt;src/Models/imports.ts</title>
 <path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M370.56,-108.3C375.73,-109.42 381.13,-110.41 386.25,-111 454.24,-118.89 472.68,-121.93 540.25,-111 544.05,-110.38 547.98,-109.48 551.83,-108.41"/>
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="558.3,-108.66 551.95,-108.38 557.09,-104.63 558.3,-108.66"/>
 </g>
-<!-- src/Hooks/imports.ts&#45;&gt;src/Atoms/index.ts -->
+<!-- src/Hooks/imports.ts&#45;&gt;src/Atoms/imports.ts -->
 <g id="edge14" class="edge">
-<title>src/Hooks/imports.ts&#45;&gt;src/Atoms/index.ts</title>
+<title>src/Hooks/imports.ts&#45;&gt;src/Atoms/imports.ts</title>
 <path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M370.64,-92.26C373.47,-90.53 376.1,-88.46 378.25,-86 386.78,-76.27 377.72,-67.73 386.25,-58 387.12,-57.01 388.07,-56.07 389.08,-55.2"/>
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="394.95,-53.62 388.84,-55.37 392.52,-50.19 394.95,-53.62"/>
 </g>
