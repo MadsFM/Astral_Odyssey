@@ -110,15 +110,11 @@ export class HttpClient<SecurityDataType = unknown> {
   private format?: ResponseType;
 
   constructor({ securityWorker, secure, format, ...axiosConfig }: ApiConfig<SecurityDataType> = {}) {
-    this.instance = axios.create({
-      ...axiosConfig,
-      baseURL: "http://localhost:9000", // Explicitly set baseURL here
-    });
+    this.instance = axios.create({ ...axiosConfig, baseURL: axiosConfig.baseURL || "" });
     this.secure = secure;
     this.format = format;
     this.securityWorker = securityWorker;
   }
-
 
   public setSecurityData = (data: SecurityDataType | null) => {
     this.securityData = data;
@@ -293,15 +289,31 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags User
      * @name LoginCreate
-     * @request POST:/User/Login
+     * @request POST:/User/login
      */
     loginCreate: (data: LoginUserDto, params: RequestParams = {}) =>
       this.request<UserDto, any>({
-        path: `/User/Login`,
+        path: `/User/login`,
         method: "POST",
         body: data,
         type: ContentType.Json,
         format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags User
+     * @name CheckIfExistsCreate
+     * @request POST:/User/checkIfExists
+     */
+    checkIfExistsCreate: (data: Record<string, string>, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/User/checkIfExists`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
         ...params,
       }),
   };

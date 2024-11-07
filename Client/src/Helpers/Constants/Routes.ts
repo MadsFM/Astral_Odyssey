@@ -1,3 +1,3 @@
 
 
-export const ROUTES = {LOGIN: '/', USERS: '/users'}
+export const ROUTES = {LOGIN: '/', USERS: '/users', REGISTER: '/register'}
