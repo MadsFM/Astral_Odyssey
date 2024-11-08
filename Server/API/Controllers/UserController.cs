@@ -33,7 +33,7 @@ public class UserController : ControllerBase
         return CreatedAtAction(nameof(CreateUser), new { id = createdUser.Userid }, createdUser);
     }
 
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     [HttpGet("getAll")]
     public async Task<ActionResult<List<UserDto>>> ReadAllUsers()
     {
@@ -41,7 +41,7 @@ public class UserController : ControllerBase
         return Ok(users);
     }
 
-    //[Authorize(Roles = "Admin, Player")]
+    [Authorize(Roles = "Admin, Player")]
     [HttpGet("getById/{id}")]
     public async Task<ActionResult<UserDto>> ReadUserById(int id)
     {
@@ -60,8 +60,22 @@ public class UserController : ControllerBase
         }
         return Ok(user);
     }
+    
+    [AllowAnonymous]
+    [HttpPost("login")]
+    public async Task<ActionResult<UserDto>> Login([FromBody] LoginUserDto loginUserDto)
+    {
+        var userDto = await _userService.Login(loginUserDto);
 
-    //[Authorize(Roles = "Admin, Player")]
+        if (userDto == null)
+        {
+            return Unauthorized(new { Message = "Invalid username or password" });
+        }
+
+        return Ok(userDto);
+    }
+
+    [Authorize(Roles = "Admin, Player")]
     [HttpPatch("{id}")]
     public async Task<ActionResult<UserDto>> UpdateUser(int id, [FromBody] UpdateUserDto updateUserDto)
     {
@@ -88,7 +102,7 @@ public class UserController : ControllerBase
         }
     }
 
-    //[Authorize(Roles = "Admin, Player")]
+    [Authorize(Roles = "Admin, Player")]
     [HttpDelete("{id}")]
     public async Task<ActionResult<UserDto>> DeleteUser(int id)
     {
@@ -100,7 +114,6 @@ public class UserController : ControllerBase
             {
                 return Forbid("Players can only delete their own account!");
             }
-            
             var deletedUser = await _userService.DeleteUser(id);
             return Ok(UserDto.FromEntity(deletedUser));
         }
@@ -108,19 +121,5 @@ public class UserController : ControllerBase
         {
             return NotFound(new { Message = ex.Message });
         }
-    }
-
-    [AllowAnonymous]
-    [HttpPost("Login")]
-    public async Task<ActionResult<UserDto>> Login([FromBody] LoginUserDto loginUserDto)
-    {
-        var userDto = await _userService.Login(loginUserDto);
-
-        if (userDto == null)
-        {
-            return Unauthorized(new { Message = "Invalid username or password" });
-        }
-
-        return Ok(userDto);
     }
 }
