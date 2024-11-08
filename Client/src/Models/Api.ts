@@ -209,12 +209,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags User
-     * @name CreateCreate
-     * @request POST:/User/create
+     * @name RegisterCreate
+     * @request POST:/User/register
      */
-    createCreate: (data: CreateUserDto, params: RequestParams = {}) =>
+    registerCreate: (data: CreateUserDto, params: RequestParams = {}) =>
       this.request<UserDto, any>({
-        path: `/User/create`,
+        path: `/User/register`,
         method: "POST",
         body: data,
         type: ContentType.Json,
@@ -256,6 +256,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags User
+     * @name LoginCreate
+     * @request POST:/User/login
+     */
+    loginCreate: (data: LoginUserDto, params: RequestParams = {}) =>
+      this.request<UserDto, any>({
+        path: `/User/login`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags User
      * @name UserPartialUpdate
      * @request PATCH:/User/{id}
      */
@@ -281,39 +298,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/User/${id}`,
         method: "DELETE",
         format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags User
-     * @name LoginCreate
-     * @request POST:/User/login
-     */
-    loginCreate: (data: LoginUserDto, params: RequestParams = {}) =>
-      this.request<UserDto, any>({
-        path: `/User/login`,
-        method: "POST",
-        body: data,
-        type: ContentType.Json,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags User
-     * @name CheckIfExistsCreate
-     * @request POST:/User/checkIfExists
-     */
-    checkIfExistsCreate: (data: Record<string, string>, params: RequestParams = {}) =>
-      this.request<void, any>({
-        path: `/User/checkIfExists`,
-        method: "POST",
-        body: data,
-        type: ContentType.Json,
         ...params,
       }),
   };
