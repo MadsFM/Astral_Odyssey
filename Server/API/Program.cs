@@ -40,8 +40,8 @@ builder.Services.AddAuthentication(options =>
 
         options.TokenValidationParameters = new TokenValidationParameters
         {
-            ValidateIssuer = true,
-            ValidateAudience = true,
+            ValidateIssuer = false,
+            ValidateAudience = false,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
@@ -109,8 +109,9 @@ else
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.UseRouting();
+
 app.UseCors("AllowAll");
+app.UseRouting();
 
 #region Security Middleware
 // Enable authentication and authorization

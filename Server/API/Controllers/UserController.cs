@@ -19,7 +19,8 @@ public class UserController : ControllerBase
     }
 
     [AllowAnonymous]
-    [HttpPost("create")]
+    [HttpPost]
+    [Route("register")]
     public async Task<ActionResult<UserDto>> CreateUser(CreateUserDto createUserDto)
     {
         if (!ModelState.IsValid)
@@ -34,7 +35,8 @@ public class UserController : ControllerBase
     }
 
     [Authorize(Roles = "Admin")]
-    [HttpGet("getAll")]
+    [HttpGet]
+    [Route("getAll")]
     public async Task<ActionResult<List<UserDto>>> ReadAllUsers()
     {
         var users = await _userService.ReadAllUsers();
@@ -42,7 +44,8 @@ public class UserController : ControllerBase
     }
 
     [Authorize(Roles = "Admin, Player")]
-    [HttpGet("getById/{id}")]
+    [HttpGet]
+    [Route(("getById/{id}"))]
     public async Task<ActionResult<UserDto>> ReadUserById(int id)
     {
         var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -62,7 +65,8 @@ public class UserController : ControllerBase
     }
     
     [AllowAnonymous]
-    [HttpPost("login")]
+    [HttpPost]
+    [Route("login")]
     public async Task<ActionResult<UserDto>> Login([FromBody] LoginUserDto loginUserDto)
     {
         var userDto = await _userService.Login(loginUserDto);
@@ -76,7 +80,8 @@ public class UserController : ControllerBase
     }
 
     [Authorize(Roles = "Admin, Player")]
-    [HttpPatch("{id}")]
+    [HttpPatch]
+    [Route("{id}")]
     public async Task<ActionResult<UserDto>> UpdateUser(int id, [FromBody] UpdateUserDto updateUserDto)
     {
         if (!ModelState.IsValid)
@@ -103,7 +108,8 @@ public class UserController : ControllerBase
     }
 
     [Authorize(Roles = "Admin, Player")]
-    [HttpDelete("{id}")]
+    [HttpDelete]
+    [Route("{id}")]
     public async Task<ActionResult<UserDto>> DeleteUser(int id)
     {
         try
