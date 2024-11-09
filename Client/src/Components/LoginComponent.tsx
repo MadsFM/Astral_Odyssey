@@ -17,10 +17,12 @@ function LoginComponent() {
     const handleLogin = async () => {
         try {
             const res = await api.user.loginCreate({username, password});
-            if (res.data && res.data.token) {
+            if (res.data && res.data.token && res.data.roles) {
                 localStorage.setItem("authToken", res.data.token);
+
+                if (res.data.roles === "Admin")
                 alert("Login successful");
-                navigate(ROUTES.USERS)
+                navigate(ROUTES.MAIN)
             } else {
                 setError("Invalid username or password");
             }
