@@ -33,6 +33,99 @@ export interface LoginUserDto {
   password?: string | null;
 }
 
+export interface Planet {
+  /** @format int32 */
+  planetid?: number;
+  /**
+   * @minLength 0
+   * @maxLength 100
+   */
+  name?: string | null;
+  description?: string | null;
+  /** @format int32 */
+  universeid?: number;
+  isdiscovered?: boolean | null;
+  quests?: Quest[] | null;
+  universe?: Universe;
+}
+
+export interface Quest {
+  /** @format int32 */
+  questid?: number;
+  /**
+   * @minLength 0
+   * @maxLength 100
+   */
+  title?: string | null;
+  description?: string | null;
+  /** @format int32 */
+  planetid?: number | null;
+  /** @format int32 */
+  universeid?: number | null;
+  iscompleted?: boolean | null;
+  planet?: Planet;
+  quizzes?: Quiz[] | null;
+  universe?: Universe;
+  userquestprogresses?: Userquestprogress[] | null;
+}
+
+export interface Quiz {
+  /** @format int32 */
+  quizid?: number;
+  question?: string | null;
+  /**
+   * @minLength 0
+   * @maxLength 100
+   */
+  answer?: string | null;
+  hint?: string | null;
+  /** @format int32 */
+  questid?: number | null;
+  quest?: Quest;
+}
+
+export interface Role {
+  /** @format int32 */
+  roleid?: number;
+  /**
+   * @minLength 0
+   * @maxLength 50
+   */
+  rolename?: string | null;
+  userroles?: Userrole[] | null;
+}
+
+export interface RoleCountDto {
+  roleName?: string | null;
+  /** @format int32 */
+  userCount?: number;
+}
+
+export interface Scoreboard {
+  /** @format int32 */
+  scoreid?: number;
+  /** @format int32 */
+  userid?: number;
+  /** @format int32 */
+  points?: number;
+  /** @format date-time */
+  updatedat?: string | null;
+  user?: User;
+}
+
+export interface Universe {
+  /** @format int32 */
+  universeid?: number;
+  /**
+   * @minLength 0
+   * @maxLength 100
+   */
+  name?: string | null;
+  description?: string | null;
+  planets?: Planet[] | null;
+  quests?: Quest[] | null;
+}
+
 export interface UpdateUserDto {
   /**
    * @minLength 0
@@ -51,6 +144,31 @@ export interface UpdateUserDto {
   newPassword?: string | null;
 }
 
+export interface User {
+  /** @format int32 */
+  userid?: number;
+  /**
+   * @minLength 0
+   * @maxLength 50
+   */
+  username?: string | null;
+  /**
+   * @minLength 0
+   * @maxLength 100
+   */
+  email?: string | null;
+  /**
+   * @minLength 0
+   * @maxLength 255
+   */
+  passwordhash?: string | null;
+  /** @format date-time */
+  createdat?: string | null;
+  scoreboards?: Scoreboard[] | null;
+  userquestprogresses?: Userquestprogress[] | null;
+  userroles?: Userrole[] | null;
+}
+
 export interface UserDto {
   /** @format int32 */
   userid?: number;
@@ -63,6 +181,31 @@ export interface UserDto {
   scoreboardIds?: number[] | null;
   userquestprogressIds?: number[] | null;
   roles?: string[] | null;
+}
+
+export interface Userquestprogress {
+  /** @format int32 */
+  progressid?: number;
+  /** @format int32 */
+  userid?: number;
+  /** @format int32 */
+  questid?: number;
+  iscompleted?: boolean | null;
+  /** @format date-time */
+  lastupdated?: string | null;
+  quest?: Quest;
+  user?: User;
+}
+
+export interface Userrole {
+  /** @format int32 */
+  userid?: number;
+  /** @format int32 */
+  roleid?: number;
+  /** @format date-time */
+  createdat?: string | null;
+  role?: Role;
+  user?: User;
 }
 
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, HeadersDefaults, ResponseType } from "axios";
@@ -204,6 +347,22 @@ export class HttpClient<SecurityDataType = unknown> {
  * @version 1.0
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
+  role = {
+    /**
+     * No description
+     *
+     * @tags Role
+     * @name RoleCountList
+     * @request GET:/Role/role-count
+     */
+    roleCountList: (params: RequestParams = {}) =>
+      this.request<RoleCountDto[], any>({
+        path: `/Role/role-count`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+  };
   user = {
     /**
      * No description
@@ -294,7 +453,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request DELETE:/User/{id}
      */
     userDelete: (id: number, params: RequestParams = {}) =>
-      this.request<UserDto, any>({
+      this.request<User, any>({
         path: `/User/${id}`,
         method: "DELETE",
         format: "json",

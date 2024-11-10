@@ -1,6 +1,7 @@
 import { FaBell, FaUserCircle, FaSearch, FaCog, FaSignOutAlt } from 'react-icons/fa';
 
 const TopBar = ({ username }) => {
+
     return (
         <div className="w-full h-16 bg-gray-800 flex items-center justify-between px-6">
             {/* Left Side - Search Bar */}

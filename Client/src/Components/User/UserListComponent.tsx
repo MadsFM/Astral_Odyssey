@@ -2,6 +2,8 @@ import {useEffect, useState} from "react";
 import {Api, UserDto} from "../../Models";
 import axios from "axios";
 
+
+//@ts-ignore
 const api = new Api({
     baseURL: "http://localhost:9000",
 });

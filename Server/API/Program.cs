@@ -70,6 +70,7 @@ builder.Services.AddDbContext<MyDbContext>((serviceProvider, options) =>
 #region Services
 
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;

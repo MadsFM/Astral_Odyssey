@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using DataAccess.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Service.Interfaces;
@@ -110,7 +111,7 @@ public class UserController : ControllerBase
     [Authorize(Roles = "Admin, Player")]
     [HttpDelete]
     [Route("{id}")]
-    public async Task<ActionResult<UserDto>> DeleteUser(int id)
+    public async Task<ActionResult<User>> DeleteUser(int id)
     {
         try
         {

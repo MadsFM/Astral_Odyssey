@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import UserListComponent from '../User/UserListComponent'; // Import your UserListComponent
 import TopBar from '../Frames/TopBar'; // Import the TopBar component
-import Sidebar from '../Frames/SideBare.tsx'; // Import the Sidebar component
+import Sidebar from './SideBar.tsx'; // Import the Sidebar component
 
 const MainLayout = () => {
     const [currentTab, setCurrentTab] = useState('users');
