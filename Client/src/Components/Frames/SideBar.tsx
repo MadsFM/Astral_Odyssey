@@ -26,6 +26,7 @@ const Sidebar = ({ setCurrentTab, currentTab }) => {
                             : ''
                     }`}
                 >
+
           <span
               className={`relative inline-block ${
                   currentTab === tab.key ? 'text-black' : 'text-gray-300'

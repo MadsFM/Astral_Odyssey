@@ -16,6 +16,7 @@ const TopBar = ({ username }) => {
                 </div>
             </div>
 
+
             {/* Center - Game Title */}
             <h1 className="text-xl text-white font-semibold">Astral Odyssey</h1>
 
