@@ -11,11 +11,19 @@ function RegisterComponent() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<string | null>(null);
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
 
     const registerNewPlayer = async () => {
+        if (password.length < 6) {
+            setError("Password must be at least 6 characters long");
+            return;
+        }
+
+        setLoading(true);
+        setError(null);
         try {
             const userData = {
                 username,
